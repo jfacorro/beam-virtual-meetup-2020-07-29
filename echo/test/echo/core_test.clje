@@ -13,5 +13,7 @@
 (deftest echoing
   (testing "/ echoes request body"
     (application/ensure_all_started :echo)
-    (let [res (make-request "foo")]
-      (is (= res "foo")))))
+    (are [x] (= x (make-request x))
+      "foo"
+      "bar"
+      "whatever")))

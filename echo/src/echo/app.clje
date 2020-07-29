@@ -1,7 +1,31 @@
 (ns echo.app
   (:require [echo.sup :as sup]))
 
+
+;; HTTP server setup & configuration
+
+(def port 8080)
+
+(def routes
+  '{:_ (["/" :echo.root nil])})
+
+(defn start-cowboy
+  "Start a cowboy server on port 8080 with a single root handler"
+  []
+  (let [routes (-> routes
+                   clj->erl
+                   maps/to_list)
+        dispatch (cowboy_router/compile routes)
+        transport-opts (-> {:port port}
+                           clj->erl
+                           maps/to_list)
+        protocol-opts (clj->erl {:env {:dispatch dispatch}})]
+    (cowboy/start_clear :echo.listener transport-opts protocol-opts)))
+
+;; application behaviour callbacks
+
 (defn start [type args]
+  (start-cowboy)
   (sup/start-link))
 
 (defn stop [state]

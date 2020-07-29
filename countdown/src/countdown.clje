@@ -1,5 +1,11 @@
 (ns countdown)
 
 (defn main [args]
-  (println "Args:" (mapv str args))
-  (erlang/halt 0))
+  (let [n (erlang/list_to_integer (first args))]
+    (println "Final countdown to" n)
+    (loop [n n]
+      (when (pos? n)
+        (println n)
+        (timer/sleep 1000)
+        (recur (dec n))))
+    (println "Yeah!")))

@@ -6,6 +6,7 @@
     , [ stdlib
       , kernel
       , clojerl
+      , cowboy
       ]
     }
   , {mod, {'echo.app', []}}

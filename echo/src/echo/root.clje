@@ -1,4 +1,6 @@
 (ns echo.root)
 
 (defn init [req _]
-  #erl[:ok req nil])
+  (let [[_ req-body req] (cowboy_req/read_body req)
+        req (cowboy_req/reply 200 #erl{} req-body req)]
+    #erl[:ok req nil]))

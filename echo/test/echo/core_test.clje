@@ -2,6 +2,16 @@
   (:require [clojure.test :refer :all]
             [echo.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(defn make-request
+  [data]
+  (-> "curl -s http://localhost:8080 --data "
+      (str data)
+      erlang/binary_to_list
+      os/cmd
+      str))
+
+(deftest echoing
+  (testing "/ echoes request body"
+    (application/ensure_all_started :echo)
+    (let [res (make-request "foo")]
+      (is (= res "foo")))))

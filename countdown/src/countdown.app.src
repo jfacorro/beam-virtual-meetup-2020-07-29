@@ -1,0 +1,12 @@
+{ application, 'countdown'
+, [ {vsn, git}
+  , {description, "A Clojerl escript"}
+  , {modules, []}
+  , { applications
+    , [ stdlib
+      , kernel
+      , clojerl
+      ]
+    }
+  ]
+}.

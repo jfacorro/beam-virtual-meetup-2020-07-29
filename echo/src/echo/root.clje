@@ -1,0 +1,4 @@
+(ns echo.root)
+
+(defn init [req _]
+  #erl[:ok req nil])

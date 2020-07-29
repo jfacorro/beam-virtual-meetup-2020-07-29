@@ -1,0 +1,13 @@
+{ application, 'echo'
+, [ {vsn, git}
+  , {description, "A Clojerl application"}
+  , {modules, []}
+  , { applications
+    , [ stdlib
+      , kernel
+      , clojerl
+      ]
+    }
+  , {mod, {'echo.app', []}}
+  ]
+}.

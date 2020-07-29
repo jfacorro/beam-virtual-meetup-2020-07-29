@@ -1,7 +1,17 @@
 (ns countdown)
 
+(defn parse-args
+  [x]
+  (try
+    (erlang/list_to_integer x)
+    (catch :error :badarg
+      nil)))
+
 (defn main [args]
-  (let [n (erlang/list_to_integer (first args))]
+  (let [n (parse-args (first args))]
+    (when-not n
+      (println "Invalid argument:" (str (first args)))
+      (erlang/halt 0))
     (println "Final countdown to" n)
     (loop [n n]
       (when (pos? n)
